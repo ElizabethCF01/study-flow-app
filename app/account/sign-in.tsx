@@ -97,7 +97,6 @@ export default function SignInScreen() {
       </Box>
       {/* Actions */}
       <Box className="w-full px-8 mt-6">
-        {/* Checkbox and Forgot Password */}
         <Box className="flex-row items-center justify-between">
           <Box className="flex-row ">
             <Checkbox
@@ -115,7 +114,6 @@ export default function SignInScreen() {
           <Text className="text-[#39D1E5] font-bold">Forgot Password?</Text>
         </Box>
 
-        {/* Botón de Login */}
         <GradientButton
           handleClick={handleLogin}
           text="Login"

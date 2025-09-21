@@ -1,5 +1,4 @@
 import "@/global.css";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -21,7 +20,6 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [hasOnboarded, setHasOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
