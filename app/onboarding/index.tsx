@@ -1,39 +1,28 @@
+import GlowView from "@/components/glow-view";
 import GradientButton from "@/components/gradient-button";
 import { Box } from "@gluestack-ui/themed";
 import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
 import React from "react";
-import { Image, ImageBackground, StyleSheet, Text } from "react-native";
+import { Image, Text } from "react-native";
 
-const Logo = require("../../assets/images/study-flow.png");
-const RadialImage = require("../../assets/images/glow-1.png");
 const FocusImage = require("../../assets/images/focus.png");
 const MusicImage = require("../../assets/images/music.png");
 const NotificationsImage = require("../../assets/images/notifications-off.png");
 
 export default function FirstOnboardingScreen() {
 
-    const handleGoToNext = () => {
-        console.log("Navigating to next onboarding screen");
-        router.push("/onboarding/screen-one");
-    }
-  return (
-    <Box className="flex-1">
-      <Image
-        source={RadialImage}
-        style={styles.radialImageOverlay}
-        resizeMode="contain"
-      />
-      
-      <ImageBackground
-        source={require("../../assets/images/blur-bg.png")}
-        style={styles.background}
-        className="gap-16 pb-16"
-      >
-        {/* Logo */}
-        <Box className="absolute top-16 flex-row items-center gap-2 pt-10">
-          <Image source={Logo} className="h-10 w-52" />
-        </Box>
+    const handleOnboardingComplete = async () => {
+        try {
+          await SecureStore.setItemAsync("hasOnboarded", "true");
+          router.replace("/account/sign-in"); // TODO: Replace this with a session check
+        } catch (error) {
+          console.error("Failed to save onboarding status", error);
+        }
+      };
 
+  return (
+    <GlowView>
         {/* Heading */}
         <Box className="items-center justify-center mt-36">
           <Text className="text-white text-3xl font-medium">
@@ -71,25 +60,8 @@ export default function FirstOnboardingScreen() {
         <GradientButton
           text="Let's Get Started"
           className="w-60 h-14"
-          handleClick={handleGoToNext}
+          handleClick={handleOnboardingComplete}
         />
-      </ImageBackground>
-    </Box>
+    </GlowView>
   );
 }
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: "contain",
-    alignItems: "center",
-    paddingTop: 80,
-  },
-  radialImageOverlay: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    resizeMode: "cover",
-    flex: 1,
-    top: -240,
-  }
-});
