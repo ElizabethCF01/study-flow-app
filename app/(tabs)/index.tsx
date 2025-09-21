@@ -1,3 +1,4 @@
+import { Button } from '@gluestack-ui/themed';
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
 
@@ -5,9 +6,18 @@ import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 
 export default function HomeScreen() {
+  const resetOnboarding = async () => {
+      try {
+        await SecureStore.setItemAsync('hasOnboarded', 'false');
+        router.replace('/onboarding');
+      } catch (error) {
+        console.error('Failed to reset onboarding status', error);
+      }
+    };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -72,6 +82,9 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+          <Button className="mt-4" onPress={resetOnboarding} >
+            <ThemedText>Reset Onboarding</ThemedText>
+          </Button>
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
