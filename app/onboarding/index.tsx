@@ -23,11 +23,7 @@ export default function FirstOnboardingScreen() {
         style={styles.radialImageOverlay}
         resizeMode="contain"
       />
-      <Image
-        source={require("../../assets/images/blur-bg.png")}
-        style={styles.blurOverlay}
-        resizeMode="contain"
-      />
+      
       <ImageBackground
         source={require("../../assets/images/blur-bg.png")}
         style={styles.background}
@@ -95,12 +91,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     flex: 1,
     top: -240,
-  },
-  blurOverlay: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
-    top: -10,
-  },
+  }
 });
