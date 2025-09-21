@@ -1,21 +1,17 @@
-import '@/global.css';
+import "@/global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
-  useFonts
-} from '@expo-google-fonts/poppins';
+  useFonts,
+} from "@expo-google-fonts/poppins";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import * as SecureStore from "expo-secure-store";
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { config } from "../gluestack-ui.config";
@@ -53,7 +49,7 @@ export default function RootLayout() {
     checkOnboardingStatus();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     if (fontsLoaded || error) {
       SplashScreen.hideAsync();
     }
@@ -65,12 +61,17 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider config={config}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
+    <ThemeProvider value={DarkTheme}>
+      <GluestackUIProvider config={config}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           {hasOnboarded ? (
             <>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="account" options={{ headerShown: false }} />
               <Stack.Screen
                 name="modal"
                 options={{ presentation: "modal", title: "Modal" }}
@@ -81,7 +82,7 @@ export default function RootLayout() {
           )}
         </Stack>
         <StatusBar style="auto" />
-      </ThemeProvider>
-    </GluestackUIProvider>
+      </GluestackUIProvider>
+    </ThemeProvider>
   );
 }
