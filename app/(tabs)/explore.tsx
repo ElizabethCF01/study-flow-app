@@ -1,112 +1,155 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
-
-export default function TabTwoScreen() {
+const ExploreScreen = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <LinearGradient colors={['#25253eff', '#16213e', '#0f172a']} style={styles.container}>
+      <SafeAreaView>
+      <StatusBar barStyle="light-content" backgroundColor="#3b3b60ff" />
+      <Text style={styles.header}>Explore</Text>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search genres, moods, activities..."
+        placeholderTextColor="#55ed1eff"
+      />
+      <View style={styles.categoryRow}>
+        <LinearGradient colors={['#ffffffff', '#6a1d89ff']} style={[styles.categoryButton, styles.focusButton]}>
+          <Text style={styles.categoryText}>Focus</Text>
+        </LinearGradient>
+        <LinearGradient colors={['#2e2e44', '#3a3a5e']} style={styles.categoryButton}>
+          <Text style={styles.categoryText}>Relax</Text>
+        </LinearGradient>
+        <LinearGradient colors={['#2e2e44', '#3a3a5e']} style={styles.categoryButton}>
+          <Text style={styles.categoryText}>Sleep</Text>
+        </LinearGradient>
+        <LinearGradient colors={['#2e2e44', '#3a3a5e']} style={styles.categoryButton}>
+          <Text style={styles.categoryText}>Meditate</Text>
+        </LinearGradient>
+      </View>
+      <Text style={styles.sectionTitle}>Genres</Text>
+      <View style={styles.tabs}>
+        <TouchableOpacity style={styles.tab}>
+          <Text style={styles.tabText}>ALL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tab}>
+          <Text style={styles.tabText}>MUSIC</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tab}>
+          <Text style={styles.tabText}>NATURE</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.grid}>
+        {[
+          { name: 'Acoustic', icon: '🎸' },
+          { name: 'Atmospheric', icon: '✨' },
+          { name: 'Beach', icon: '🏖️' },
+          { name: 'Electronic', icon: '🎹' },
+          { name: 'Forest', icon: '🌲' },
+          { name: 'Grooves', icon: '🥁' },
+          { name: 'Rain', icon: '🌧️' },
+          { name: 'Rainforest', icon: '🌴' },
+          { name: 'River', icon: '🌊' },
+        ].map((item) => (
+          <LinearGradient key={item.name} colors={['#2e2e44', '#3a3a5e']} style={styles.genreButton}>
+            <Text style={styles.genreIcon}>{item.icon}</Text>
+            <Text style={styles.genreText}>{item.name}</Text>
+          </LinearGradient>
+        ))}
+      </View>
+      <Text style={styles.sectionTitle}>Moods</Text>
+      <View style={styles.grid}>
+        {['Brooding', 'Calm', 'Chill', 'Dark', 'Down', 'Epic', 'Floating', 'Heavy', 'Hopeful', 'Intense', 'Optimistic', 'Playful', 'Ponderous', 'Serene'].map((mood) => (
+          <LinearGradient key={mood} colors={['#2e2e44', '#3a3a5e']} style={styles.genreButton}>
+            <Text style={styles.genreText}>{mood}</Text>
+            {}
+          </LinearGradient>
+        ))}
+      </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight || 0,
+    padding: 10,
   },
-  titleContainer: {
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  searchBar: {
+    backgroundColor: '#2e2e44',
+    borderRadius: 20,
+    padding: 10,
+    color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  categoryRow: {
     flexDirection: 'row',
-    gap: 8,
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  categoryButton: {
+    padding: 10,
+    borderRadius: 20,
+    width: '23%',
+    alignItems: 'center',
+  },
+  focusButton: {
+    backgroundColor: '#fff',
+  },
+  categoryText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  sectionTitle: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  tabs: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+  },
+  tab: {
+    padding: 5,
+  },
+  tabText: {
+    color: '#888',
+    fontSize: 14,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  genreButton: {
+    padding: 10,
+    borderRadius: 10,
+    width: '30%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  genreIcon: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  genreText: {
+    color: '#fff',
+    fontSize: 14,
   },
 });
+
+export default ExploreScreen;
