@@ -22,15 +22,18 @@ const TimeSelectionModal = ({
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [customTime, setCustomTime] = useState("");
   const [showBreakInput, setShowBreakInput] = useState(true);
-  const [breakTime, setBreakTime] = useState("");
+  const [breakTime, setBreakTime] = useState("5");
 
   const timeOptions = ["25 min", "50 min", "90 min"];
 
   const handleStart = () => {
-    if (selectedTime) {
-      onSelectTime(selectedTime, breakTime);
+    const finalBreak = breakTime && breakTime.trim() !== "" ? breakTime : "5";
+    console.log(`Selected Time: ${selectedTime || customTime}, Break Time: ${finalBreak}`);
+
+    if (selectedTime && selectedTime !== "Custom") {
+      onSelectTime(selectedTime, finalBreak);
     } else if (customTime) {
-      onSelectTime(`${customTime} min`, breakTime );
+      onSelectTime(`${customTime} min`, finalBreak);
     }
     onClose();
   };
@@ -42,7 +45,7 @@ const TimeSelectionModal = ({
       setShowBreakInput(true);
     } else {
       setShowBreakInput(false);
-      setBreakTime("");
+      setBreakTime("5");
     }
   };
 
@@ -86,29 +89,11 @@ const TimeSelectionModal = ({
               placeholder="Minutes"
               placeholderTextColor="#9ca3af"
               keyboardType="numeric"
-              className="text-white text-lg ml-4 w-20 p-2 rounded-lg bg-white/10 border border-white/20"
+              className="text-white text-lg w-36 p-2 rounded-lg bg-white/10 border border-white/20"
             />
           )}
 
           <View className=" mt-4 min-h-16">
-            {/* <Pressable
-              className="flex-row items-center"
-              onPress={() => setShowBreakInput(!showBreakInput)}
-            >
-               <View
-                className={`w-6 h-6 rounded border border-white/20 mr-2 ${
-                  showBreakInput ? "bg-white/20" : ""
-                }`}
-              >
-                {showBreakInput && (
-                  <Check
-                    size={20}
-                    color="white"
-                    className={showBreakInput ? "opacity-100" : "opacity-0"}
-                  />
-                )}
-              </View> 
-            </Pressable> */}
               <Text className="text-white text-lg">Break</Text>
 
               <Box className="flex-row items-center mt-2">
