@@ -5,7 +5,7 @@ import { Image, ImageBackground, StyleSheet } from "react-native";
 const Logo = require("../assets/images/study-flow.png");
 const RadialImage = require("../assets/images/glow-1.png");
 
-export default function GlowView({children}: {children: React.ReactNode}) {
+export default function GlowView({children, showLogo = true}: {children: React.ReactNode, showLogo?: boolean}) {
 
   return (
     <Box className="flex-1">
@@ -21,9 +21,11 @@ export default function GlowView({children}: {children: React.ReactNode}) {
         className="gap-16 pb-16"
       >
         {/* Logo */}
-        <Box className="absolute top-16 flex-row items-center gap-2 pt-10">
-          <Image source={Logo} className="h-10 w-52" />
-        </Box>
+        {showLogo && (
+          <Box className="absolute top-16 flex-row items-center gap-2 pt-10">
+            <Image source={Logo} className="h-10 w-52" />
+          </Box>
+        )}
 
         {children}
       </ImageBackground>

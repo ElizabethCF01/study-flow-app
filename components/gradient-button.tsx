@@ -4,10 +4,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Text } from "react-native";
 
-export default function GradientButton({handleClick, text, className = ""}:{handleClick: () => void, text: string, className?: string}) {
+export default function GradientButton({handleClick, text, disabled = false, className = ""}:{handleClick: () => void, text: string, disabled?: boolean, className?: string}) {
 
   return (
-      <Button onPress={handleClick} variant="link">
+      <Button onPress={handleClick} variant="link" disabled={disabled}>
         <Box className={`h-12 items-center justify-center rounded-full overflow-hidden ${className}`}>
           <LinearGradient
             colors={['#8F64FE', '#39D1E5']}

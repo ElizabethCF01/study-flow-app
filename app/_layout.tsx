@@ -70,6 +70,7 @@ export default function RootLayout() {
             <>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="account" options={{ headerShown: false }} />
+              <Stack.Screen name="focus-session" options={{ headerShown: false }} />
               <Stack.Screen
                 name="modal"
                 options={{ presentation: "modal", title: "Modal" }}

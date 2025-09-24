@@ -18,6 +18,10 @@ export default function HomeScreen() {
         console.error('Failed to reset onboarding status', error);
       }
     };
+
+    const goToFocusSession = () => {
+      router.push('/focus-session');
+    };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -84,6 +88,9 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
           <Button className="mt-4" onPress={resetOnboarding} >
             <ThemedText>Reset Onboarding</ThemedText>
+          </Button>
+          <Button className="mt-4" onPress={goToFocusSession}>
+            <ThemedText>Go to Focus Session</ThemedText>
           </Button>
         </ThemedText>
       </ThemedView>
