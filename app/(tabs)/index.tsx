@@ -1,111 +1,164 @@
-import { Button } from '@gluestack-ui/themed';
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link, router } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallbackText,
+  AvatarImage,
+  Box,
+} from "@gluestack-ui/themed";
+import { Image } from "expo-image";
+import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import GlowView from "../../components/glow-view";
 
 export default function HomeScreen() {
   const resetOnboarding = async () => {
-      try {
-        await SecureStore.setItemAsync('hasOnboarded', 'false');
-        router.replace('/onboarding');
-      } catch (error) {
-        console.error('Failed to reset onboarding status', error);
-      }
-    };
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    try {
+      await SecureStore.setItemAsync("hasOnboarded", "false");
+      router.replace("/onboarding");
+    } catch (error) {
+      console.error("Failed to reset onboarding status", error);
+    }
+  };
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-          <Button className="mt-4" onPress={resetOnboarding} >
-            <ThemedText>Reset Onboarding</ThemedText>
-          </Button>
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const goToFocusSession = () => {
+    router.push("/focus-session");
+  };
+  return (
+    <GlowView showLogo={false}>
+      {/* Header */}
+      <Box className="flex-1 w-full px-4">
+        {/* Greeting */}
+        <View className="flex-row justify-between items-center mt-4">
+          <View className="mb-6">
+            <Text style={styles.wave}>👋 Hi Emma</Text>
+            <Text style={styles.greetingText}>Good Evening</Text>
+          </View>
+          <Avatar size="md">
+            <AvatarFallbackText>Jane Doe</AvatarFallbackText>
+            <AvatarImage
+              source={require("../../assets/images/avatar.jpg")}
+            />
+            <AvatarBadge />
+          </Avatar>
+        </View>
+
+        {/* Focus Modes */}
+        <Text style={styles.subheading}>Choose your focus mode</Text>
+
+        {/* Deep Focus Mode / Navigation */}
+        <Pressable
+          onPress={goToFocusSession}
+          className="mt-6 items-center flex-row gap-4 bg-white/10 rounded-2xl p-6 py-8"
+        >
+          <Image
+            source={require("../../assets/images/deep-focus-icon.png")}
+            style={{ width: 42, height: 42 }}
+          />
+          <View>
+            <Text style={styles.modeTitle}>Deep Focus</Text>
+            <Text style={styles.modeSubtitle}>For longer Sessions</Text>
+          </View>
+        </Pressable>
+
+        <Pressable
+          onPress={goToFocusSession}
+          className="mt-8 items-center flex-row gap-4 bg-white/10 rounded-2xl p-6 py-8"
+        >
+          <Image
+            source={require("../../assets/images/exam-cram-icon.png")}
+            style={{ width: 42, height: 42 }}
+          />
+          <View>
+            <Text style={styles.modeTitle}>Exam Cram</Text>
+            <Text style={styles.modeSubtitle}>For sharp recall</Text>
+          </View>
+        </Pressable>
+
+        <Pressable
+          onPress={goToFocusSession}
+          className="mt-8 items-center flex-row gap-4 bg-white/10 rounded-2xl p-6 py-8"
+        >
+          <Image
+            source={require("../../assets/images/creativity-icon.png")}
+            style={{ width: 42, height: 42 }}
+          />
+          <View>
+            <Text style={styles.modeTitle}>Creativity</Text>
+            <Text style={styles.modeSubtitle}>For free-flow thinking</Text>
+          </View>
+        </Pressable>
+      </Box>
+    </GlowView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: { flex: 1, padding: 20, justifyContent: "flex-start" },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  time: { color: "#fff", fontSize: 16 },
+  headerRight: { flexDirection: "row", alignItems: "center" },
+  headerStat: { color: "#fff", marginHorizontal: 4 },
+  avatar: { width: 36, height: 36, borderRadius: 18, marginLeft: 12 },
+
+  wave: { fontSize: 16, color: "#fff" },
+  greetingText: { fontSize: 22, fontWeight: "bold", color: "#fff" },
+
+  card: {
+    backgroundColor: "rgba(255,255,255,0.05)",
+    borderRadius: 16,
+    padding: 16,
+    marginTop: 20,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  cardTitle: { fontSize: 18, fontWeight: "bold", color: "#fff" },
+  cardSubtitle: { fontSize: 14, color: "#aaa", marginTop: 6 },
+  button: {
+    borderColor: "#888",
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginTop: 12,
+    alignSelf: "flex-start",
+  },
+  buttonText: { color: "#fff" },
+
+  subheading: { marginTop: 30, color: "#aaa", fontSize: 14 },
+  modeCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 16,
+    marginTop: 12,
+    gap: 12,
+  },
+  modeTitle: { fontSize: 16, fontWeight: "bold", color: "#fff" },
+  modeSubtitle: { fontSize: 13, color: "#aaa" },
+
+  bottomNav: {
+    position: "absolute",
+    bottom: 10,
     left: 0,
-    position: 'absolute',
+    right: 0,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingVertical: 12,
+  },
+  navItem: { alignItems: "center" },
+  navLabel: { color: "#fff", fontSize: 12, marginTop: 4 },
+  navLabelActive: {
+    color: "#4FACFE",
+    fontSize: 12,
+    marginTop: 4,
+    fontWeight: "bold",
   },
 });
